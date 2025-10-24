@@ -6,7 +6,7 @@ const profilesData = [
   // Person 1
   {
     id: "anirban_banerjee",
-    name: "Person 1",
+    name: "Here is the person name ",
     designation: "Home",
     relation: "Relative",
     image: "images.jpg",
@@ -370,7 +370,7 @@ function createProfileCard(profile) {
         Open Folder
       </button>
       <button class="btn btn--outline btn--sm" onclick="showMindMapForProfile('${profile.id}')">
-        Connections
+        Connection
       </button>
     </div>
   `;

@@ -136,25 +136,8 @@
   75% { text-shadow: 0 0 6px var(--color-glitch-1), 0 0 6px var(--color-glitch-2); transform: translate(3px, 2px); } /* More offset */
 }
 
-/* Fast Border Flicker Animation */
-@keyframes border-flicker {
-  0%, 100% { border-color: var(--color-glitch-1); transform: translate(1px, -1px); }
-  25% { border-color: transparent; }
-  50% { border-color: var(--color-glitch-2); transform: translate(-1px, 1px); }
-  75% { border-color: transparent; }
-}
-
-/* NEW Calm Border Animation */
-@keyframes border-calm-glitch {
-  0%, 100% {
-    border-color: var(--color-glitch-1);
-    box-shadow: 0 0 8px var(--color-glitch-1);
-  }
-  50% {
-    border-color: var(--color-glitch-2);
-    box-shadow: 0 0 8px var(--color-glitch-2);
-  }
-}
+/* REMOVED border-flicker */
+/* REMOVED border-calm-glitch */
 
 @keyframes spin {
   0% { transform: rotate(0deg); }
@@ -209,20 +192,7 @@ body {
   position: relative;
 }
 
-/* GLITCH STATIC EFFECT */
-body::before {
-  content: "";
-  position: fixed;
-  top: -50%; left: -50%;
-  width: 200%; height: 200%;
-  z-index: 0; /* Behind content, over background */
-  pointer-events: none;
-  background: 
-    radial-gradient(var(--color-green-dim) 1px, transparent 1px);
-  background-size: 5px 5px; /* small dots */
-  opacity: 0.3;
-  animation: glitch-bg 0.15s linear infinite; /* Faster glitch animation */
-}
+/* REMOVED body::before */
 
 *,
 *::before,
@@ -288,89 +258,42 @@ pre {
   border-radius: var(--radius-base);
 }
 
-/* Glitch Border Element Style */
+/* Basic Border Element Style (No animation) */
 .card,
 .form-control,
 .modal-content,
 .gallery-header,
 .mindmap-header,
 .mindmap-container,
-.profile-detail {
+.profile-detail,
+.btn,
+.nav-btn,
+.custom-select-trigger { /* Added custom select trigger */
   position: relative;
   border-radius: var(--radius-sm);
-  z-index: 1; /* Ensure content is on top of ::before/::after */
+  z-index: 1; 
+  border: 1px solid var(--color-border); /* Apply base border */
 }
 
-/* Separate rule for buttons to apply different animation */
-.btn {
-   position: relative;
-   border-radius: var(--radius-sm);
-   z-index: 1;
+.modal-content {
+   border: 1px solid var(--color-primary); /* Keep modal border stronger */
 }
 
-.card::before, .card::after,
-.form-control::before, .form-control::after,
-.modal-content::before, .modal-content::after,
-.gallery-header::before, .gallery-header::after,
-.mindmap-header::before, .mindmap-header::after,
-.mindmap-container::before, .mindmap-container::after,
-.profile-detail::before, .profile-detail::after,
-.btn::before, .btn::after {
-  content: '';
-  position: absolute;
-  top: -4px; /* Bigger offset */
-  left: -4px; /* Bigger offset */
-  width: calc(100% + 8px); /* Bigger size */
-  height: calc(100% + 8px); /* Bigger size */
-  border-radius: inherit;
-  pointer-events: none;
-  opacity: 0.8;
-  z-index: -1; /* Place borders behind the element */
-  border: 2px solid transparent; /* Base border */
-  box-shadow: 0 0 5px transparent; /* Base shadow */
+.mindmap-container {
+    border-radius: var(--radius-lg); /* Keep mindmap rounded */
 }
 
-/* Apply border-flicker to non-button elements */
-.card::before,
-.form-control::before,
-.modal-content::before,
-.gallery-header::before,
-.mindmap-header::before,
-.mindmap-container::before,
-.profile-detail::before {
-  animation: border-flicker 1s linear infinite;
-  box-shadow: 0 0 10px var(--color-glitch-1);
+/* Remove default border from nav-btn */
+.nav-btn {
+    border: 1px solid transparent;
 }
-.card::after,
-.form-control::after,
-.modal-content::after,
-.gallery-header::after,
-.mindmap-header::after,
-.mindmap-container::after,
-.profile-detail::after {
-  animation: border-flicker 1s linear infinite reverse;
-  animation-delay: -0.5s;
-  box-shadow: 0 0 10px var(--color-glitch-2);
+.nav-btn:hover {
+    border-color: var(--color-border);
+}
+.nav-btn.active {
+    border-color: var(--color-primary);
 }
 
-/* Apply border-calm-glitch specifically to buttons */
-.btn::before {
-  animation: border-calm-glitch 4s linear infinite;
-}
-.btn::after {
-   animation: border-calm-glitch 4s linear infinite reverse;
-   animation-delay: -2s;
-}
-/* Also apply to nav-btn hover/active states */
-.nav-btn::before {
-  border: 2px solid transparent; /* Set base */
-  animation: border-calm-glitch 4s linear infinite;
-}
-.nav-btn::after {
-  border: 2px solid transparent; /* Set base */
-  animation: border-calm-glitch 4s linear infinite reverse;
-  animation-delay: -2s;
-}
 
 /* Buttons */
 .btn {
@@ -472,6 +395,7 @@ select.form-control {
   box-shadow: var(--shadow-md), 0 0 5px rgba(var(--color-green-neon-rgb), 0.3); /* Base Glow */
   overflow: hidden; /* This MUST be hidden for z-index to work */
   transition: box-shadow var(--duration-normal) var(--ease-standard), border-color var(--duration-normal) var(--ease-standard);
+  border-radius: var(--radius-lg); /* Rounded card */
 }
 
 .card:hover {
@@ -598,7 +522,6 @@ select.form-control {
 
 .nav-btn {
   padding: var(--space-8) var(--space-16);
-  border: 1px solid transparent;
   background: transparent;
   color: var(--color-text-secondary);
   cursor: pointer;
@@ -613,7 +536,7 @@ select.form-control {
 .nav-btn:hover {
   background: var(--color-secondary);
   color: var(--color-text);
-  border-color: var(--color-border);
+  border-color: var(--color-primary); /* Highlight on hover */
 }
 
 .nav-btn.active {
@@ -624,27 +547,7 @@ select.form-control {
   animation: glitch-text 1.5s linear infinite; /* Glitch text */
 }
 
-/* Add glitch borders to nav-btn */
-.nav-btn::before, .nav-btn::after {
-  content: '';
-  position: absolute;
-  top: -4px;
-  left: -4px;
-  width: calc(100% + 8px);
-  height: calc(100% + 8px);
-  border-radius: inherit;
-  pointer-events: none;
-  opacity: 0; /* Hidden by default */
-  z-index: -1;
-  transition: opacity var(--duration-fast) linear;
-}
-.nav-btn:hover::before, .nav-btn:hover::after {
-  opacity: 0.8; /* Show on hover */
-}
-.nav-btn.active::before, .nav-btn.active::after {
-  opacity: 0.8; /* Show when active */
-}
-/* Already using border-calm-glitch from above */
+/* REMOVED .nav-btn::before, .nav-btn::after */
 
 
 .nav-search {
@@ -684,12 +587,12 @@ select.form-control {
 
 .profiles-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Narrower card */
   gap: var(--space-24);
   margin-top: var(--space-32);
 }
 
-/* --- NEW PROFILE CARD (v10) - Image Left, Text Right, Buttons Bottom --- */
+/* --- PROFILE CARD (v18) - 3 Columns Horizontal --- */
 .profile-card {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
@@ -699,28 +602,33 @@ select.form-control {
   box-shadow: var(--shadow-md), 0 0 5px rgba(var(--color-green-neon-rgb), 0.3); /* Base Glow */
   animation: scan-in 0.3s ease-out forwards;
   opacity: 0;
-  display: flex;
-  flex-wrap: wrap; /* Allow wrapping for buttons */
-  height: 100%; /* Make cards in a row equal height */
+  display: flex; /* Horizontal layout */
+  /*flex-wrap: wrap; REMOVED*/
+  /* height: 100%; REMOVED - Height is now intrinsic */
+  border-radius: var(--radius-lg); /* Rounded card */
+  align-items: stretch; /* Make columns full height */
+}
+
+.profile-card:hover {
   transform: translateY(-4px);
   border-color: var(--color-primary);
   box-shadow: var(--shadow-lg), 0 0 20px rgba(var(--color-green-neon-rgb), 0.6); /* Stronger Glow on hover */
 }
 
 .profile-card__header {
-  width: 180px; /* Increased Width */
-  padding: var(--space-16);
+  width: 150px; /* Increased Width */
+  padding: var(--space-12); /* Added padding */
   border-right: 1px solid var(--color-card-border-inner);
   display: flex;
-  align-items: center;
+  align-items: center; /* Center avatar vertically */
   justify-content: center;
   background: var(--color-secondary);
   flex-shrink: 0; /* Prevent shrinking */
 }
 
 .profile-avatar {
-  width: 150px; /* Increased Size */
-  height: 150px; /* Increased Size */
+  width: 120px; /* Increased Size */
+  height: 120px; /* Increased Size */
   border-radius: var(--radius-full);
   margin: 0;
   background: var(--color-primary);
@@ -733,7 +641,7 @@ select.form-control {
   overflow: hidden;
   text-shadow: none;
   border: 2px solid var(--color-green-dim);
-  animation: avatar-pulse 2.5s infinite ease-in-out; /* Added animation */
+  animation: avatar-pulse 1.8s infinite ease-in-out; /* Faster animation */
 }
 
 .profile-avatar img {
@@ -743,16 +651,17 @@ select.form-control {
 }
 
 .profile-card__content {
-  width: calc(100% - 180px); /* Fill remaining width - Adjusted */
-  padding: var(--space-16);
+  padding: var(--space-12); /* Less padding */
   display: flex;
   flex-direction: column;
   flex-grow: 1; /* Allow this section to grow */
   text-align: center; /* Center text */
+  justify-content: center; /* Vertically center content */
+  min-width: 0; /* Prevent content from overflowing */
 }
 
 .profile-name {
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-lg); /* Slightly smaller */
   font-weight: var(--font-weight-semibold);
   margin-bottom: var(--space-4);
   font-family: var(--font-family-display); /* Use Righteous font */
@@ -761,8 +670,8 @@ select.form-control {
 
 .profile-designation {
   color: var(--color-text-secondary);
-  margin-bottom: var(--space-8);
-  font-size: var(--font-size-md); /* Increased size */
+  margin-bottom: var(--space-4); /* Less margin */
+  font-size: var(--font-size-sm); /* Slightly smaller */
   text-align: center; /* Center */
 }
 
@@ -770,30 +679,35 @@ select.form-control {
   display: inline-block;
   background: var(--color-primary);
   color: var(--color-btn-primary-text);
-  padding: var(--space-4) var(--space-8);
+  padding: var(--space-2) var(--space-6); /* Smaller padding */
   border-radius: var(--radius-full);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs); /* Smaller font */
   font-weight: var(--font-weight-medium);
-  margin: 0 auto var(--space-16); /* Center */
+  margin: 0 auto var(--space-8); /* Less margin */
   text-align: center; 
   width: fit-content;
   text-shadow: none;
 }
 
 .profile-actions {
-  width: 100%; /* Span full card width */
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: var(--space-12); /* Increased gap */
-  padding: var(--space-16);
-  border-top: 1px solid var(--color-card-border-inner);
-  margin-top: auto; /* Pushes to bottom of flex container */
+  width: 90px; /* Narrower button column */
+  display: flex; 
+  flex-direction: column; /* Stack vertically */
+  justify-content: center; /* Center vertically */
+  align-items: stretch; /* Make buttons stretch */
+  gap: var(--space-8); /* Gap between buttons */
+  padding: var(--space-12); /* Less padding */
+  border-left: 1px solid var(--color-card-border-inner); /* Add left border */
+  flex-shrink: 0; /* Prevent shrinking */
 }
 
 .profile-actions .btn {
-  padding: var(--space-8) var(--space-16);
-  font-size: var(--font-size-base);
-  width: 100%;
+  padding: var(--space-6) var(--space-8); /* Adjust button padding */
+  font-size: var(--font-size-xs); /* Adjust font size */
+  width: 100%; /* Make buttons fill container */
+  white-space: nowrap; /* Prevent text wrapping */
+  overflow: hidden; /* Hide overflow */
+  text-overflow: ellipsis; /* Add ellipsis */
 }
 /* --- END NEW CARD --- */
 
@@ -851,7 +765,7 @@ select.form-control {
 .profile-header-avatar {
   width: 100%; /* Full width */
   height: auto; /* Auto height */
-  aspect-ratio: 1 / 1; /* Maintain aspect ratio */
+  aspect-ratio: 1 / 1; /* Square */
   border-radius: 0; /* Remove rounding */
   background: var(--color-primary);
   display: flex;
@@ -864,7 +778,7 @@ select.form-control {
   text-shadow: none;
   border: none; /* Remove border */
   border-bottom: 3px solid var(--color-green-dim); /* Add bottom border */
-  /* animation: avatar-pulse 2.5s infinite ease-in-out; /* Keep pulse if desired, might look odd */
+  /* animation: avatar-pulse 1.8s infinite ease-in-out; /* Removed pulse */
 }
 
 .profile-header-avatar img {
@@ -1192,4 +1106,123 @@ select.form-control {
   .form-row {
     grid-template-columns: 1fr;
   }
+
+  /* Adjust card layout slightly for medium screens */
+  .profile-card__header {
+      width: 120px; /* Make image column smaller */
+  }
+  .profile-card__content {
+       /* Adjust content width - flex handles it */
+  }
+  .profile-avatar {
+      width: 80px; /* Make avatar smaller */
+      height: 80px;
+  }
+   .profile-actions {
+      width: 90px; /* Adjust button column width */
+  }
+}
+
+@media (max-width: 480px) {
+    /* Keep horizontal layout */
+    .profile-card__header {
+        width: 100px; /* Even smaller image column */
+        padding: var(--space-8);
+    }
+    .profile-card__content {
+        padding: var(--space-8);
+    }
+    .profile-avatar {
+        width: 80px; /* Even smaller avatar */
+        height: 80px;
+    }
+    .profile-actions {
+        width: 100px; /* Smaller button column */
+        padding: var(--space-8);
+    }
+    .profile-actions .btn {
+      padding: var(--space-4) var(--space-8); /* Smaller buttons */
+      font-size: var(--font-size-xs);
+    }
+}
+
+/* Custom Select Styles */
+.custom-select-container {
+  position: relative;
+  width: 200px; /* Match original select width */
+}
+.custom-select-trigger {
+  width: 100%;
+  text-align: left;
+  display: flex; /* Use flex to align text and caret */
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  background-color: var(--color-surface); /* Ensure background */
+  color: var(--color-text); /* Ensure text color */
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-8) var(--space-12);
+  font-size: var(--font-size-md);
+  font-family: var(--font-family-mono);
+  position: relative; /* Needed for z-index */
+  z-index: 1;
+}
+.custom-select-trigger::after {
+    content: '';
+    width: 16px;
+    height: 16px;
+    background-image: var(--select-caret);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    transition: transform 0.2s ease; /* Add transition for rotation */
+}
+.custom-select-container.open .custom-select-trigger::after {
+    transform: rotate(180deg);
+}
+.custom-select-options {
+  position: absolute;
+  top: calc(100% + 4px); /* Position below the trigger */
+  left: 0;
+  width: 100%;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  max-height: 200px; /* Limit height and allow scrolling */
+  overflow-y: auto;
+  z-index: 110; /* Ensure it appears above other elements */
+  display: none; /* Hidden by default */
+  box-shadow: var(--shadow-md);
+}
+.custom-select-container.open .custom-select-options {
+  display: block; /* Show when container has 'open' class */
+}
+.custom-select-option {
+  padding: var(--space-8) var(--space-12);
+  cursor: pointer;
+  color: var(--color-text);
+  font-size: var(--font-size-md);
+  font-family: var(--font-family-mono);
+  transition: background-color 0.1s linear;
+}
+.custom-select-option:hover {
+  background-color: var(--color-secondary-hover);
+  color: var(--color-primary);
+}
+.custom-select-option.selected {
+  background-color: var(--color-primary);
+  color: var(--color-btn-primary-text);
+  font-weight: bold;
+}
+.hidden {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    height: 0;
+    width: 0;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
 }
