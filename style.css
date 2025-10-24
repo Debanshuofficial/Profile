@@ -1111,9 +1111,6 @@ select.form-control {
   .profile-card__header {
       width: 120px; /* Make image column smaller */
   }
-  .profile-card__content {
-       /* Adjust content width - flex handles it */
-  }
   .profile-avatar {
       width: 80px; /* Make avatar smaller */
       height: 80px;
