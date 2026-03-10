@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profiles</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vis-network@latest/dist/vis-network.min.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <h2>[Classified] Person Databse</h2>
+            </div>
+            <div class="nav-menu">
+                <button class="nav-btn active" data-view="gallery">Gallery</button>
+                <button class="nav-btn" data-view="mindmap">Connections</button>
+            </div>
+            <div class="nav-search">
+                <input type="text" id="searchInput" placeholder="Search..." class="form-control">
+                <select id="relationFilter" class="form-control">
+                    <option value="">All</option>
+                    <option value="Relative">Relative</option>
+                    <option value="People">People</option>
+                </select>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <section id="galleryView" class="view active">
+            <div class="container">
+                <div class="gallery-header">
+                    <h1>Profiles</h1>
+                    <p class="text-secondary">
+                        Browse through the Database. Total Entries: <span id="totalCount">0</span> |
+                        Relatives: <span id="relativeCount">0</span> |
+                        People: <span id="peopleCount">0</span>
+                    </p>
+                </div>
+                <div class="profiles-grid" id="profilesGrid">
+                    </div>
+            </div>
+        </section>
+
+        <section id="mindmapView" class="view">
+            <div class="container-fluid">
+                <div class="mindmap-header">
+                    <h1>Relationship Network</h1>
+                    <p class="text-secondary">Explore connections between Persons</p>
+                    <div class="mindmap-controls">
+                        <button class="btn btn--secondary" id="resetZoom">Reset View</button>
+                    </div>
+                </div>
+                <div class="mindmap-container">
+                    <div id="mindmapNetwork" class="mindmap-network"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="profileView" class="view">
+            <div class="container">
+                <button class="btn btn--outline back-btn" id="backToGallery">
+                    ← Back to Gallery
+                </button>
+                <div class="profile-detail" id="profileDetail">
+                    </div>
+            </div>
+        </section>
+
+    <div class="modal" id="documentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="documentTitle">Document Viewer</h3>
+                <button class="modal-close" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body" id="documentContent">
+                </div>
+        </div>
+    </div>
+
+    <div class="loading-spinner" id="loadingSpinner">
+        <div class="spinner"></div>
+        <p>Loading...</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
